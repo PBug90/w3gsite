@@ -17,7 +17,6 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development node src/server",
     "start": "cross-env NODE_ENV=production node build/server",
-    "prebuild": "rimraf build",
     "build": "npm run build:client && npm run build:server",
     "build:client": "cross-env NODE_ENV=production webpack -p --progress --config=config/webpack.config.prod.js",
     "build:server": "copyfiles -a -u 1 src/server/**/**/* build",
@@ -26,7 +25,8 @@
     "test": "exit 1",
     "release:patch": "npm run lint && npx standard-version -r patch && git push --follow-tags origin master",
     "release:minor": "npm run lint && npx standard-version -r minor && git push --follow-tags origin master",
-    "release:major": "npm run lint && npx standard-version -r major && git push --follow-tags origin master"
+    "release:major": "npm run lint && npx standard-version -r major && git push --follow-tags origin master",
+    "heroku-postbuild" : "npm run build"
   },
   "postcss": {},
   "devDependencies": {
@@ -75,7 +75,6 @@
     "redux-actions": "2.6.1",
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
-    "rimraf": "2.6.2",
     "sanitize.css": "6.0.0",
     "sass-loader": "7.1.0",
     "style-loader": "0.22.1",
@@ -93,7 +92,8 @@
     "cross-env": "5.2.0",
     "express": "4.16.3",
     "fast-safe-stringify": "2.0.5",
-    "winston": "3.0.0",
-    "w3gjs": "https://github.com/anxietypb/w3gjs.git"
+    "rimraf": "^2.6.2",
+    "w3gjs": "git+https://github.com/anxietypb/w3gjs.git",
+    "winston": "3.0.0"
   }
 }

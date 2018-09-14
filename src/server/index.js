@@ -36,5 +36,5 @@ setupApiRoutes(app);
 setupAppRoutes(app);
 
 http.createServer(app).listen(process.env.PORT, () => {
-  logger.info(`HTTP server is now running on http://localhost:${process.env.HTTP_PORT}`);
+  logger.info(`HTTP server is now running on http://localhost:${process.env.PORT}`);
 });
