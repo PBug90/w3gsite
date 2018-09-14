@@ -93,6 +93,7 @@
     "cross-env": "5.2.0",
     "express": "4.16.3",
     "fast-safe-stringify": "2.0.5",
-    "winston": "3.0.0"
+    "winston": "3.0.0",
+    "w3gjs": "https://github.com/anxietypb/w3gjs.git"
   }
 }
