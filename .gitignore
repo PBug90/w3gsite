@@ -62,5 +62,6 @@ typings/
 
 build-dev
 build-prod
+build
 
 uploads
