@@ -1,7 +1,6 @@
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-const setupApiRoutes = require('./middlewares/api');
 const logger = require('./logger');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
@@ -30,9 +29,9 @@ logger.info(`Application env: ${process.env.NODE_ENV}`);
 
 app.use(logger.expressMiddleware);
 app.use(bodyParser.json());
+app.use(require('./routes'));
 
 // application routes
-setupApiRoutes(app);
 setupAppRoutes(app);
 
 http.createServer(app).listen(process.env.PORT, () => {
