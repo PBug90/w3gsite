@@ -1,8 +1,9 @@
+require('dotenv').config();
 const {resolve} = require('path');
 const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const webpack = require('webpack');
 const commonConfig = require('./webpack.config.common');
 
 module.exports = merge(commonConfig, {
@@ -29,6 +30,9 @@ module.exports = merge(commonConfig, {
         minifyCSS: true,
         minifyURLs: true
       }
+    }),
+    new webpack.DefinePlugin({
+      SERVICE_URL: JSON.stringify(process.env.BACKEND_HOSTNAME)
     })
   ]
 });
