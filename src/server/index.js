@@ -42,6 +42,6 @@ if (require.main === module) {
         logger.info(`HTTP server is now running on http://localhost:${process.env.PORT}`);
       });
     })
-    .catch((err) => console.error(err));
+    .catch((err) => logger.error(err));
 }
 module.exports = app;

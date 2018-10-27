@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const validation = require('./validation');
-const db = require('../db');
 const jwt = require('jsonwebtoken');
 
 router.post('/user/login', validation.userLogin, function(req, res) {
@@ -9,7 +8,7 @@ router.post('/user/login', validation.userLogin, function(req, res) {
   if (!(username === 'testuser')) {
     return res.status(401).json({});
   }
-  const token = jwt.sign({username}, 'shhhhhhared-secret');
+  const token = jwt.sign({username}, process.env.JWT_SECRET);
   return res.json({token});
 });
 

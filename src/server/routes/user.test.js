@@ -1,3 +1,5 @@
+process.env.JWT_SECRET = 'a secret';
+
 const request = require('supertest');
 const app = require('../index');
 const db = require('../db');

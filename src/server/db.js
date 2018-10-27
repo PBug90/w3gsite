@@ -10,7 +10,6 @@ module.exports = {
         process.env.MONGODB_CONNECTION_STRING,
         {useNewUrlParser: true}
       ).then((localClient) => {
-        console.log('Connected to MongoDB successfully.');
         dbInstance = localClient.db();
         client = localClient;
         bucketInstance = new GridFSBucket(dbInstance);
