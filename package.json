@@ -15,7 +15,7 @@
     "lint": "eslint --ignore-path .gitignore --ignore-pattern node_modules -- .",
     "prettier": "prettier --ignore-path .gitignore --write './**/*.js'",
     "test:backend": "jest --config src/server/jest.config.js src/server/ --runInBand ",
-    "heroku-postbuild": "npm run build",
+    "postinstall": "npm run build",
     "test": "jest --config ./src/server/jest.config.js"
   },
   "postcss": {},
