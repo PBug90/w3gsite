@@ -25,6 +25,9 @@ module.exports = merge(commonConfig, {
     }),
     new HtmlWebpackHarddiskPlugin({
       outputPath: resolve(__dirname, '..', 'build-dev', 'client')
+    }),
+    new webpack.DefinePlugin({
+      SERVICE_URL: JSON.stringify(process.env.BACKEND_HOSTNAME)
     })
   ]
 });

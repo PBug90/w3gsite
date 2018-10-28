@@ -42,9 +42,12 @@ router.post('/replay', authorizationMiddleware.any, upload.single('replay'), fun
 });
 
 router.post('/replay/parse', upload.single('replay'), function(req, res) {
-  const result = parser.parse(req.file.path);
-  logger.error('dang!');
-  fs.unlink(req.file.path, () => res.json(result));
+  try {
+    const result = parser.parse(req.file.path);
+    fs.unlink(req.file.path, () => res.json(result));
+  } catch (ex) {
+    res.status(400).json({message: ex.message});
+  }
 });
 
 module.exports = router;
