@@ -7,6 +7,17 @@ import {connect} from 'react-redux';
 import {compose} from 'redux';
 import uploadReplay from '../actions/uploadReplay';
 import ReactJson from 'react-json-view';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Replay from 'components/Replay';
+
+function TabContainer(props) {
+  return (
+    <Typography component="div" style={{padding: 8 * 3}}>
+      {props.children}
+    </Typography>
+  );
+}
 
 const styles = (theme) => ({
   layout: {
@@ -50,6 +61,7 @@ const styles = (theme) => ({
 class HomeLayout extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {value: 'user'};
     this.simulateClick = this.simulateClick.bind(this);
     this.uploadReplay = this.uploadReplay.bind(this);
   }
@@ -68,8 +80,13 @@ class HomeLayout extends React.Component {
     this.fileField.click();
   }
 
+  handleChange = (event, value) => {
+    this.setState({value});
+  };
+
   render() {
     const {classes, upload} = this.props;
+    const {value} = this.state;
     return (
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -91,10 +108,26 @@ class HomeLayout extends React.Component {
             onChange={this.uploadReplay}
           />
         </Paper>
-        <Paper className={classes.jsonPaper}>
-          {upload.replay && <ReactJson src={upload.replay} />}
-          {upload.error && <span>{upload.error}</span>}
-        </Paper>
+        {upload.replay && (
+          <Paper className={classes.jsonPaper}>
+            <Tabs value={value} onChange={this.handleChange}>
+              <Tab value="user" label="User View" />
+              <Tab value="json" label="JSON" />
+              <Tab value="errors" label="Errors" />
+            </Tabs>
+            {value === 'user' && (
+              <TabContainer>
+                <Replay replay={upload.replay} />{' '}
+              </TabContainer>
+            )}
+            {value === 'json' && (
+              <TabContainer>
+                <ReactJson src={upload.replay} />
+              </TabContainer>
+            )}
+            {value === 'errors' && <TabContainer>{upload.error && <span>{upload.error}</span>}</TabContainer>}
+          </Paper>
+        )}
       </main>
     );
   }

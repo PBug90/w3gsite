@@ -8262,9 +8262,9 @@ w3c-hr-time@^1.0.1:
   dependencies:
     browser-process-hrtime "^0.1.2"
 
-"w3gjs@git+https://github.com/anxietypb/w3gjs.git":
+"w3gjs@git+https://github.com/anxietypb/w3gjs.git#test-jsonschema":
   version "1.0.0"
-  resolved "git+https://github.com/anxietypb/w3gjs.git#8cc7f53f30a399572da718396260a36014d14698"
+  resolved "git+https://github.com/anxietypb/w3gjs.git#760a141d567ddbab828a1e7c9b37864b19c8192c"
   dependencies:
     binary-parser "^1.3.2"
 
