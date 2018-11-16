@@ -64,6 +64,7 @@
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",
     "react-router-redux": "4.0.8",
+    "recharts": "^1.3.6",
     "redux": "4.0.0",
     "redux-actions": "2.6.1",
     "redux-logger": "3.0.6",
@@ -94,7 +95,7 @@
     "mongodb": "^3.1.6",
     "multer": "^1.3.1",
     "rimraf": "^2.6.2",
-    "w3gjs": "git+https://github.com/anxietypb/w3gjs.git",
+    "w3gjs": "git+https://github.com/anxietypb/w3gjs.git#test-jsonschema",
     "winston": "3.0.0"
   }
 }
