@@ -28,7 +28,9 @@ const app = express();
 
 app.set('env', process.env.NODE_ENV);
 logger.info(`Application env: ${process.env.NODE_ENV}`);
-
+app.use(function(req, res, next) {
+  setTimeout(next, 1000);
+});
 app.use(logger.expressMiddleware);
 app.use(bodyParser.json());
 app.use(require('./routes'));
