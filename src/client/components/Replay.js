@@ -27,6 +27,7 @@ export default function Replay(props) {
             </div>
           );
         }
+
         currentPlayers = [];
       }
       currentTeam = player.teamid;
