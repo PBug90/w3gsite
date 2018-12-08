@@ -1,36 +1,27 @@
 import React from 'react';
 import {getRace, getUnit, getBuilding, getItem, getUpgrade} from '../mappings';
-
+import GameEntityIcon from 'components/GameEntityIcon';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Avatar from '@material-ui/core/Avatar';
 export default function Player(props) {
   const {player} = props;
   const units = Object.keys(player.units.summary).map((unitId) => (
-    <li>
-      {getUnit(unitId)} {player.units.summary[unitId]}
-    </li>
+    <GameEntityIcon number="3" iconpath={`/static/acidbomb.png`} />
   ));
   const buildings = Object.keys(player.buildings.summary).map((buildingId) => (
-    <li>
-      {getBuilding(buildingId)} {player.buildings.summary[buildingId]}
-    </li>
+    <GameEntityIcon number="3" iconpath={`/static/acidbomb.png`} />
   ));
   const items = Object.keys(player.items.summary).map((itemId) => (
-    <li>
-      {getItem(itemId)} {player.items.summary[itemId]}
-    </li>
+    <GameEntityIcon number="3" iconpath={`/static/acidbomb.png`} />
   ));
   const upgrades = Object.keys(player.upgrades.summary).map((upgradeId) => (
-    <li>
-      {getUpgrade(upgradeId)} {player.upgrades.summary[upgradeId]}
-    </li>
+    <GameEntityIcon number="3" iconpath={`/static/acidbomb.png`} />
   ));
   return (
-    <h3>
-      <small>{getRace(player.detectedRace)} </small>
-      {player.name}
-      <ul>{units}</ul>
-      <ul>{buildings}</ul>
-      <ul>{items}</ul>
-      <ul>{upgrades}</ul>
-    </h3>
+    <ListItem>
+      <Avatar>{getRace(player.raceDetected)}</Avatar>
+      <ListItemText primary={player.name} secondary={`${player.apm} apm`} />
+    </ListItem>
   );
 }

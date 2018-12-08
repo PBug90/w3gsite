@@ -4,10 +4,11 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const logger = require('../logger');
 const webpackConfig = require('../../../config/webpack.config.dev');
-
+const express = require('express');
 const compiler = webpack(webpackConfig);
 
 module.exports = function setup(app) {
+  app.use('/static/', express.static(resolve(__dirname, '..', '..', 'client', 'static')));
   app.use(
     webpackDevMiddleware(compiler, {
       logger,
@@ -17,7 +18,6 @@ module.exports = function setup(app) {
       }
     })
   );
-
   app.use(webpackHotMiddleware(compiler));
 
   // all other requests be handled by UI itself
