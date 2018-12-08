@@ -79,7 +79,6 @@ class HomeLayout extends React.Component {
             <Tabs value={value} onChange={this.handleChange}>
               <Tab value="user" label="User View" />
               <Tab value="json" label="JSON" />
-              <Tab value="errors" label="Errors" />
             </Tabs>
             {value === 'user' && (
               <TabContainer>
@@ -91,7 +90,6 @@ class HomeLayout extends React.Component {
                 <ReactJson src={upload.replay} />
               </TabContainer>
             )}
-            {value === 'errors' && <TabContainer>{upload.error && <span>{upload.error}</span>}</TabContainer>}
           </Paper>
         )}
       </main>

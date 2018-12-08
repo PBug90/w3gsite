@@ -6,6 +6,7 @@ const clientBuildPath = resolve(__dirname, '..', '..', 'client');
 
 module.exports = function setup(app) {
   app.use(compression());
+  app.use('/static/', express.static(resolve(__dirname, '..', '..', '..', 'src', 'client', 'static')));
   app.use('/', express.static(clientBuildPath));
 
   // all other requests be handled by UI itself
