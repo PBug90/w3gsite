@@ -8458,9 +8458,9 @@ w3c-hr-time@^1.0.1:
   dependencies:
     browser-process-hrtime "^0.1.2"
 
-w3gjs@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/w3gjs/-/w3gjs-1.1.0.tgz#daa16122311bed740fd3aa639fc87de07988ee1c"
+w3gjs@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/w3gjs/-/w3gjs-1.1.1.tgz#48e6103470203c5f3f3341c0c104c235f8d1c4b9"
   dependencies:
     binary-parser "^1.3.2"
 
