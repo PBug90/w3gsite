@@ -42,9 +42,13 @@ router.post('/replay', authorizationMiddleware.any, upload.single('replay'), fun
 });
 
 router.post('/replay/parse', upload.single('replay'), function(req, res) {
+  let actions = [];
+  parser.on('actionblock', (block) => {
+    actions.push(block);
+  });
   try {
     const result = parser.parse(req.file.path);
-    fs.unlink(req.file.path, () => res.json(result));
+    fs.unlink(req.file.path, () => res.json({...result, actions}));
   } catch (ex) {
     res.status(400).json({message: ex.message});
   }

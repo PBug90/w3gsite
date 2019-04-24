@@ -5,6 +5,8 @@ import APMTimed from './APMTimed';
 import GeneralGameInfo from './GeneralGameInfo';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Heatmap from './Heatmap';
+
 export default function Replay(props) {
   const {replay} = props;
   let currentTeam = -1;
@@ -48,6 +50,7 @@ export default function Replay(props) {
     <div>
       <h3>General</h3>
       <GeneralGameInfo replay={replay} />
+      <Heatmap actions={replay.actions} map={replay.map.file}/>
       <h3>Players</h3>
       <List component="nav">{teams}</List>
       <h3>Actions per Minute</h3>
