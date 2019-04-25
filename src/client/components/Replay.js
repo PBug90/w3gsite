@@ -12,7 +12,9 @@ export default function Replay(props) {
   let currentTeam = -1;
   let teams = [];
   let currentPlayers = [];
+  const playerIdToColorMap = {};
   replay.players.forEach((player) => {
+    playerIdToColorMap[player.id] = player.color;
     if (player.teamid !== currentTeam) {
       if (currentPlayers.length > 0) {
         if (teams.length > 0) {
@@ -50,7 +52,9 @@ export default function Replay(props) {
     <div>
       <h3>General</h3>
       <GeneralGameInfo replay={replay} />
-      <Heatmap actions={replay.actions} map={replay.map.file}/>
+      <div>
+        <Heatmap actions={replay.actions} map={replay.map.file} playerIdColorMap={playerIdToColorMap} />
+      </div>
       <h3>Players</h3>
       <List component="nav">{teams}</List>
       <h3>Actions per Minute</h3>

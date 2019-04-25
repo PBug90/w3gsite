@@ -1,90 +1,122 @@
 import React from 'react';
-import heatmap from 'heatmap.js';
 import mapInformation from '../mapInformation';
-import PropTypes from 'prop-types';
+
+/*
+WC3 coordinates grid has (0,0) in the center of the map, while
+the canvas used here has (0,0) in the top left corner. 
+
+We have to convert the coordinates in order to draw the heatmap properly.
+This consists of three steps:
+1) Determining the factor that the heatmap image is smaller than the actual ingame playable map
+2) Use that ratio to convert the ingame-points of variable range that depends on map size to a point that can be placed on the heatmap
+  e.g. heatmap resides in a 500x500 container and map is 8192x8192 units, so coordinates have to be divided by the result of 8192/500
+3) Convert the scaled coordinate values to fit into the left top origin based grid used by the heatmap lib
+
+
+This component allows user input to select a specific time range to display actions that took place in that time frame.
+User input is in seconds, while actions will be filtered with millisecond precision.
+*/
 
 export default class Heatmap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       backgroundImage: null,
-      validMap: false,
-      heatmapData: null,
-      currentMap: null
+      validMap: !!mapInformation.hasOwnProperty(props.map),
+      startTime: 0,
+      endTime: 60
     };
+
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  convertActionCoordinates(xScale, yScale, actions) {
+    return actions.map((action) => {
+      const x = action.targetX || action.targetAX || action.targetBX;
+      const y = action.targetY || action.targetAY || action.targetBY;
+      let targetX = x / xScale + this.props.width / 2;
+      let targetY = y / yScale;
+
+      if (targetY > 0) {
+        targetY = this.props.height / 2 - targetY;
+      } else {
+        targetY = this.props.height / 2 + -1 * targetY;
+      }
+      return {x: targetX, y: targetY, playerId: action.playerId, value: 99, radius: 1000};
+    });
+  }
+
+  componentDidMount() {
+    this.updateHeatmap();
   }
 
   componentDidUpdate() {
-    console.log('HI', this.el);
-    if (this.el) {
-      const config = {
-        container: this.el,
-        radius: 10,
-        maxOpacity: 0.5,
-        minOpacity: 0,
-        blur: 0.75,
-        gradient: {
-          '.5': 'blue',
-          '.8': 'red',
-          '.95': 'white'
-        }
-      };
-      this.heatmapInstance = heatmap.create(config);
-    }
+    this.updateHeatmap();
+  }
 
-    const actions = this.props.actions.filter((action) => action.hasOwnProperty('targetX'));
-    console.log(this.state.currentMap, this.props.map, this.state.heatmapData);
-    if (mapInformation.hasOwnProperty(this.props.map) && this.state.currentMap !== this.props.map) {
+  updateHeatmap() {
+    if (this.canvas) {
+      const actions = this.props.actions.filter(
+        (action) =>
+          (action.hasOwnProperty('targetX') || action.hasOwnProperty('targetAX')) &&
+          action.time >= this.state.startTime * 1000 &&
+          action.time <= this.state.endTime * 1000
+      );
       const {width, height, image} = mapInformation[this.props.map];
       const xScale = width / this.props.width;
       const yScale = height / this.props.height;
+      const convertedActions = this.convertActionCoordinates(xScale, yScale, actions);
+      const canvasContext = this.canvas.getContext('2d');
 
-      const heatmapData = {
-        data: [
-          ...actions.map((action) => {
-            let targetX = action.targetX / xScale;
-            let targetY = action.targetY / yScale;
-            if (targetX > 0) {
-              targetX += 500 / 2;
-            } else {
-              targetX = 500 / 2 + targetX;
-            }
+      canvasContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      convertedActions.forEach((a2) => {
+        canvasContext.fillStyle = this.props.playerIdColorMap[a2.playerId];
+        canvasContext.fillRect(a2.x, a2.y, 5, 5);
+      });
 
-            if (targetY > 0) {
-              targetY = 500 / 2 - targetY;
-            } else {
-              targetY = 500 / 2 + -1 * targetY;
-            }
-            return {x: targetX, y: targetY, value: 100};
-          })
-        ],
-        min: 0,
-        max: 100
-      };
-      this.setState({backgroundImage: image, validMap: true, heatmapData, currentMap: this.props.map});
-    }
-    if (this.state.heatmapData) {
-      console.log('updated heatmaInstance!');
-      this.heatmapInstance.setData({...this.state.heatmapData});
+      if (this.state.backgroundImage !== image) {
+        this.setState({backgroundImage: image});
+      }
     }
   }
 
-  componentWillUnmount() {}
+  handleChange(e) {
+    if (e.target.value === 'both +10') {
+      const {startTime, endTime} = this.state;
+      this.setState({
+        startTime: startTime + 10,
+        endTime: endTime + 10
+      });
+    } else {
+      this.setState({
+        [e.target.name]: parseInt(e.target.value, 10)
+      });
+    }
+  }
 
   render() {
     if (this.state.validMap === false) {
       return <span>Cannot generate heatmap.</span>;
     }
-
+    const {width, height} = this.props;
     return (
       <div
-        ref={(el) => (this.el = el)}
         style={{
-          width: 500,
-          height: 500
+          width,
+          height: height + 50,
+          position: 'relative'
         }}
       >
-        <img style={{width: 500, height: 500}} src={`${this.state.backgroundImage}`} />
+        <img style={{width, height}} src={`${this.state.backgroundImage}`} />
+        <canvas
+          ref={(el) => (this.canvas = el)}
+          style={{left: 0, top: 0, position: 'absolute'}}
+          width={width}
+          height={height}
+        />
+        <input type="number" step="10" name="startTime" value={this.state.startTime} onChange={this.handleChange} />
+        <input type="number" step="10" name="endTime" value={this.state.endTime} onChange={this.handleChange} />
+        <input type="button" onClick={this.handleChange} value="both +10" />
       </div>
     );
   }
@@ -93,5 +125,6 @@ export default class Heatmap extends React.Component {
 Heatmap.defaultProps = {
   width: 500,
   height: 500,
-  actions: []
+  actions: [],
+  playerIdColorMap: {}
 };
