@@ -5,7 +5,6 @@ const upload = multer({dest: 'uploads/'});
 const W3GParser = require('w3gjs');
 const fs = require('fs');
 const validation = require('./validation');
-const parser = new W3GParser();
 const authorizationMiddleware = require('../middlewares/authorization');
 const db = require('../db');
 const logger = require('../logger');
@@ -27,6 +26,7 @@ router.get('/replay/:id', validation.replayCollection, function(req, res) {
 });
 
 router.post('/replay', authorizationMiddleware.any, upload.single('replay'), function(req, res) {
+  const parser = new W3GParser();
   const result = parser.parse(req.file.path);
   db.get()
     .collection('replays')
@@ -42,15 +42,17 @@ router.post('/replay', authorizationMiddleware.any, upload.single('replay'), fun
 });
 
 router.post('/replay/parse', upload.single('replay'), function(req, res) {
-  let actions = [];
-  parser.on('actionblock', (block) => {
-    actions.push(block);
+  const parser = new W3GParser();
+  const actions = [];
+  parser.msElapsed = 0;
+  parser.on('actionblock', (block, playerId) => {
+    actions.push({...block, time: parser.msElapsed, playerId});
   });
   try {
     const result = parser.parse(req.file.path);
     fs.unlink(req.file.path, () => res.json({...result, actions}));
   } catch (ex) {
-    res.status(400).json({message: ex.message});
+    fs.unlink(req.file.path, () => res.status(400).json({message: ex.message}));
   }
 });
 
