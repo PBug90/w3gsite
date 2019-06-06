@@ -16,6 +16,7 @@ This consists of three steps:
 This component allows user input to select a specific time range to display actions that took place in that time frame.
 User input is in seconds, while actions will be filtered with millisecond precision.
 */
+const images = require.context('../static/maps', true);
 
 export default class Heatmap extends React.Component {
   constructor(props) {
@@ -99,6 +100,10 @@ export default class Heatmap extends React.Component {
       return <span>Cannot generate heatmap.</span>;
     }
     const {width, height} = this.props;
+    let mapImageSRC = '';
+    if (this.state.backgroundImage) {
+      mapImageSRC = `/static/maps/${this.state.backgroundImage}`;
+    }
     return (
       <div
         style={{
@@ -107,7 +112,7 @@ export default class Heatmap extends React.Component {
           position: 'relative'
         }}
       >
-        <img style={{width, height}} src={`${this.state.backgroundImage}`} />
+        <img style={{width, height}} src={mapImageSRC} />
         <canvas
           ref={(el) => (this.canvas = el)}
           style={{left: 0, top: 0, position: 'absolute'}}

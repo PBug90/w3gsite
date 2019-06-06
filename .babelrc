@@ -1,16 +1,16 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
         "modules": false
       }
     ],
-    "stage-0",
-    "react"
+    "@babel/react"
   ],
   "retainLines": true,
   "plugins": [
-    "react-hot-loader/babel"
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-class-properties"
   ]
 }

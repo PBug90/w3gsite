@@ -1,6 +1,6 @@
 const test = SERVICE_URL; // eslint-disable-line
 console.log(test); // eslint-disable-line
-import 'babel-polyfill';
+import "core-js/stable";
 import 'whatwg-fetch';
 
 import 'sanitize.css/sanitize.css';
