@@ -1,18 +1,17 @@
 require('dotenv').config();
 const {resolve} = require('path');
 const merge = require('webpack-merge');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const commonConfig = require('./webpack.config.common');
 
 module.exports = merge(commonConfig, {
+  optimization: {
+    minimizer: [new TerserPlugin()],
+  },  
   mode: 'production',
   plugins: [
-    new UglifyJsPlugin({
-      parallel: true,
-      extractComments: true
-    }),
     new HtmlWebpackPlugin({
       hash: true,
       inject: true,

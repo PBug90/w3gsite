@@ -65,3 +65,5 @@ build-prod
 build
 
 uploads
+
+src/server/jest/jest.config.json

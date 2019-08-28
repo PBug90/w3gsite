@@ -3,7 +3,10 @@
     [
       "@babel/preset-env",
       {
-        "modules": false
+        "modules": false,
+        "useBuiltIns": "entry",
+        "targets": "> 0.25%, not dead",
+        "forceAllTransforms": true,
       }
     ],
     "@babel/react"
