@@ -1,8 +1,7 @@
-import {Server} from "./app/Server";
-import express from 'express';
-const app = express();
+import app from './app/Server'
 
-const port = 8080;
+const port = 8080
 
-const server = new Server(app);
-server.start(port);
+app.listen(port, () => {
+  console.log(`App is running on ${port}`)
+})

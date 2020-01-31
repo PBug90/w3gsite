@@ -1,29 +1,19 @@
-import {Express, Request, Response} from "express";
-import express from "express";
-import * as path from "path";
+import express, { Request, Response } from 'express'
+
+import * as path from 'path'
 import router from './routes'
-export class Server {
 
-    private app: Express;
+const app = express()
 
-    constructor(app: Express) {
-        this.app = app;
+app.use(express.static(path.resolve('./') + '/frontend/build'))
 
-        this.app.use(express.static(path.resolve("./") + "/frontend/build"));
+app.use('/api', router)
+app.get('/api/*', (req: Request, res: Response): void => {
+  res.status(404).json({ error: 'not found' })
+})
 
-        this.app.use("/api",router)
-        this.app.get("/api", (req: Request, res: Response): void => {
-            res.send("You have reached the API!a");
-        });
+app.get('*', (req: Request, res: Response): void => {
+  res.sendFile(path.resolve('./') + '/frontend/build/index.html')
+})
 
-        this.app.get("*", (req: Request, res: Response): void => {
-            res.sendFile(path.resolve("./") + "/frontend/build/index.html");
-        });
-    }
-
-    public start(port: number): void {
-        this.app.listen(port, () => console.log(`Server listening on port ${port}!`));
-    }
-
-}
-
+export default app

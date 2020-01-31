@@ -9,6 +9,7 @@
     "lib": ["es6"],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
+    "strict": true
   },
   "include": [
     "**.ts"
