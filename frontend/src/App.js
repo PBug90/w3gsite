@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import FileUploader from './components/FileUploader';
 
 function App() {
   return (
@@ -18,7 +19,9 @@ function App() {
         >
           Learn React
         </a>
+        <FileUploader />
       </header>
+
     </div>
   );
 }
