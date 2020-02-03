@@ -19,8 +19,8 @@ class FileUploader extends React.Component {
       }
       const formData = new FormData();
       formData.append('replay',this.state.file)
-
-      fetch(url,{ method: 'POST',headers:{'content-type': 'multipart/form-data'},body: this.state.file})
+      console.log(this.state.file)
+      fetch(url,{ method: 'POST',body: formData})
       .then((response) => {
         return response.json()
       })
