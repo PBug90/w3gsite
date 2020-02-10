@@ -1,29 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import FileUploader from './components/FileUploader';
+import ReplayViewer from './components/ReplayViewer'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save tpgoo reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <FileUploader />
-      </header>
+const url =process.env.REACT_APP_API_HOST + "/api/replay/"
 
-    </div>
-  );
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.handleReplayParsed = this.handleReplayParsed.bind(this)
+    this.state = {
+      replays: []
+    }
+  }
+
+  componentDidMount(){
+    fetch(url)
+    .then((response) => response.json())
+    .then((replays) => {
+      this.setState({replays: replays})
+    })
+    .catch(err => console.error(err))
+  }
+
+  handleReplayParsed(json){
+    this.setState((state, props) => ({
+      replays: [...state.replays, json]
+    }));
+  }
+
+  render(){
+    return (
+      <div className="container mx-auto">
+        <h1 className="text-6xl">WarCraft III JavaScript Replay Parser</h1>
+          <FileUploader onReplayParsed={this.handleReplayParsed}/>
+          {this.state.replays.map((replay) => <ReplayViewer replay={replay}/>)}
+      </div>
+    );
+  }
 }
+
 
 export default App;
