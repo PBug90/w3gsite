@@ -5,11 +5,11 @@ branches:
   - docs
 language: node_js
 node_js:
-- "8"
+- '8'
 script:
 - npm run test
 - npm run lint
-- cd ./frontend/ && npm run
+- cd ./frontend/ && npm run build
 deploy:
   provider: heroku
   app: enigmatic-springs-58797
@@ -17,4 +17,4 @@ deploy:
     all_branches: true
     condition: true
   api_key:
-    secure: H6wkCsvNxipY2N/77BidJGRyuaRPIwrBmMrai6z6ADaQq3rQbcSMVcEf1ZFOmlU0bfAeUdGq1OyYMcQgBC42lYSHkjeH2lfoOAM3ZacxteA0M0v6OOuYXlzKOgSaw2EDuhQyn+vHuB0J+t6SDV0+EhNMKk7MPo0Tf8ox1fBc64TPU70L/LjX9qOM0wZQniS4fCtgwuW/wXZ7o885i/DSjVjKyF6L9yR583qYWEbdG7InbGp9vx5epKR0XjLmFrMUFFnkqABJI8nYeIYchKURBGbYUzjecDQ7AgTU3GC6Fd+z3DJWQaD2m0qydxWEgwLmOSx4wvP4waMilelSQ0LBEYVjApCBeVtyVSknEUn26Y0XFVK4zehNcTY7jWIEDPZqOGpzvyKClR2scJL+Pox/DrFcitnjm4D77yrF+A4Znq3QFgFbECN2gN2J12WSD8owwgPh7TQRNH2GihRONVzLcxJk2URXMmPUKGP6dHdNzZFuZkjkuJavCLfDj1gSZHv6InYBPXql0mHo3k4rmuJrs4hgzqAsYzERu3wLG/2zaYRlaov7HqoTsbWyiEZRmpWvrE3gP1HygRIXNTITfvOjL0cxNd/4BLM1lWj4PbQwqCGzwoNsURqCiIv166b11AKZqeNP1bGIsi6Hwtk4jtB+LQIaKAgvZidObSRMrSJBZcw=
+    secure: jGJlh5x1+eAJDnaYNzAJylkcSfhMK+n2s9tSofLqyiWg0KIdDyVAwCAJp2Tic0c5Iggj7j4DsVIEbm5iAN+OPyeT8l6ABemjjoBLHYTD4w/PkiAdF2gb+Fxz1TxRbbuhaqu8qlRzFW3yeLN0jok6+flolJUgLaWXrLaWqxeDHPGmeuS7RibId6d8WXuwmxBAFCFuXiLouLjvof/TvppGaHxnQxsPADG+it5/tzfp2BU9Vs1t+vXtmObi4RzvNhi6Oh/YNBlKjUEB3oSVqmTp2EqfLjS/EVgQ/46ssmb7241FkBvYHIE9so5MzVA7pmK7mPSfHT9yARqr/dIs37fO/YDVVSAilcvAEZ5S63oe3/i6KDWOIwUiTaXsl6U2MHy8skV3NJ5yLnsebLxlk4x2XV05dJmi+QhkWuEbEbYlkGGo0fQS19LiOrrTkJrry3uQW8ImKz8dRtHmbIcjRpFvnCRzpxpQ4yXB6ZwEebX84r23++DurGkBEK65Kl//5eI6Lufnc+t2NKKSAc0D6WijT7h51jlzl6H1f5KYTXzyso8VKW39gFmrYu7ILTSUQUskLrMNPRWDwmZvHH4RD5xuyX5BcbpOkhiDq8b0FJ/EiLs9jUBR6k0UF8c4RywAFEbL9W5fYA9XCL3Q0Pt9HsDEKHKAxFbhINUr0OP51mVCRl8=
