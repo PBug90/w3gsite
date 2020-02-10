@@ -9,7 +9,7 @@ node_js:
 script:
 - npm run test
 - npm run lint
-- cd ./frontend/ && npm run build
+- cd ./frontend/ && npm install && npm run build
 deploy:
   provider: heroku
   app: enigmatic-springs-58797
