@@ -3,7 +3,7 @@ import app from './app/Server'
 import Database from './app/Database'
 dotenv.config()
 
-const port = 8080
+const port = process.env.PORT || 8080
 
 app.listen(port, async () => {
   console.log(`App is running on ${port}`)
