@@ -1,0 +1,18 @@
+git:
+  depth: 3
+branches:
+  except:
+  - docs
+language: node_js
+node_js:
+- "8"
+script:
+- npm run test
+- npm run lint
+- npm run build
+deploy:
+  provider: heroku
+  app: enigmatic-springs-58797
+  all_branches: true
+  api_key:
+    secure: H6wkCsvNxipY2N/77BidJGRyuaRPIwrBmMrai6z6ADaQq3rQbcSMVcEf1ZFOmlU0bfAeUdGq1OyYMcQgBC42lYSHkjeH2lfoOAM3ZacxteA0M0v6OOuYXlzKOgSaw2EDuhQyn+vHuB0J+t6SDV0+EhNMKk7MPo0Tf8ox1fBc64TPU70L/LjX9qOM0wZQniS4fCtgwuW/wXZ7o885i/DSjVjKyF6L9yR583qYWEbdG7InbGp9vx5epKR0XjLmFrMUFFnkqABJI8nYeIYchKURBGbYUzjecDQ7AgTU3GC6Fd+z3DJWQaD2m0qydxWEgwLmOSx4wvP4waMilelSQ0LBEYVjApCBeVtyVSknEUn26Y0XFVK4zehNcTY7jWIEDPZqOGpzvyKClR2scJL+Pox/DrFcitnjm4D77yrF+A4Znq3QFgFbECN2gN2J12WSD8owwgPh7TQRNH2GihRONVzLcxJk2URXMmPUKGP6dHdNzZFuZkjkuJavCLfDj1gSZHv6InYBPXql0mHo3k4rmuJrs4hgzqAsYzERu3wLG/2zaYRlaov7HqoTsbWyiEZRmpWvrE3gP1HygRIXNTITfvOjL0cxNd/4BLM1lWj4PbQwqCGzwoNsURqCiIv166b11AKZqeNP1bGIsi6Hwtk4jtB+LQIaKAgvZidObSRMrSJBZcw=
