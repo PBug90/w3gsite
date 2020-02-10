@@ -10,9 +10,11 @@ script:
 - npm run test
 - npm run lint
 - cd ./frontend/ && npm install && npm run build
+- cd .. && npm install
 deploy:
   provider: heroku
   app: enigmatic-springs-58797
+  skip_cleanup: true
   on:
     all_branches: true
     condition: true
