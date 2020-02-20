@@ -5,6 +5,10 @@ import path from 'path'
 
 beforeAll(() => {
   process.env.MONGO_CONNECTION_STR = process.env.MONGO_URL
+  process.env.TWITCH_SECRET = 'sometwitchsecret'
+  process.env.TWITCH_CLIENT_ID = 'sometwitchclientid'
+  process.env.CALLBACK_URL = '/api/mycallback'
+  process.env.SESSION_SECRET = 'somesecret'
 })
 
 test('returns 404 status code', async () => {
