@@ -1,8 +1,9 @@
 import { MongoClient, Db } from 'mongodb'
 
-interface Database {
+export interface Database {
   connect(): Promise<Db> ;
   get(): Promise<Db>;
+  close():Promise<void>;
 }
 
 let instance: MongoClient
@@ -17,15 +18,22 @@ const connect = async (): Promise<Db> => {
 }
 
 const get = async (): Promise<Db> => {
-  if (instance.isConnected()) {
+  if (instance && instance.isConnected()) {
     return dbInstance
   }
   return connect()
 }
 
+const close = async ():Promise<void> => {
+  if (instance && instance.isConnected()) {
+    return instance.close(true)
+  }
+}
+
 const db : Database = {
   connect,
-  get
+  get,
+  close
 }
 
 export default db

@@ -1,5 +1,4 @@
 import express, { Request, Response } from 'express'
-
 import * as path from 'path'
 import router from './routes'
 import cors from 'cors'

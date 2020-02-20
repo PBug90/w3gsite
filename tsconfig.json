@@ -7,9 +7,9 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "lib": ["es6"],
-    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true
+    "strict": true,
+    "typeRoots" : ["./typings", "./node_modules/@types", ]
   },
   "include": [
     "**.ts"

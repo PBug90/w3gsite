@@ -3,6 +3,7 @@ import app from './app/Server'
 import Database from './app/Database'
 dotenv.config()
 
+console.log(process.env.TWITCH_CLIENT_ID)
 const port = process.env.PORT || 8080
 
 app.listen(port, async () => {
