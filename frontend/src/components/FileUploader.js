@@ -1,7 +1,5 @@
 import React from 'react';
-
-const url =process.env.REACT_APP_API_HOST + "/api/replay/"
-
+import {replayUpload} from '../Requests'
 class FileUploader extends React.Component {
     constructor(props) {
       super(props);
@@ -19,10 +17,7 @@ class FileUploader extends React.Component {
       }
       const formData = new FormData();
       formData.append('replay',this.state.file)
-      fetch(url,{ method: 'POST',body: formData})
-      .then((response) => {
-        return response.json()
-      })
+      replayUpload(formData)
       .then(result => {
         this.props.onReplayParsed(result)
       })
@@ -42,8 +37,8 @@ class FileUploader extends React.Component {
     render() {
       return (
         <div>
-          <input ref="fileUploader" class="hidden" type="file" onChange={this.onChange} />
-          <button onClick={this.onClick} class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          <input ref="fileUploader" className="hidden" type="file" onChange={this.onChange} />
+          <button onClick={this.onClick} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             Upload Replay
           </button> 
         </div>

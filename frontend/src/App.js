@@ -5,8 +5,7 @@ import FileUploader from './components/FileUploader';
 import ReplayViewer from './components/ReplayViewer'
 import FeedPage from './components/FeedPage'
 import AuthContext from './AuthContext'
-const url = process.env.REACT_APP_API_HOST + "/api/replay/"
-const loginCheckUrl = process.env.REACT_APP_API_HOST + "/api/auth/login/success"
+import {loginCheck, feedReplays} from './Requests'
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -18,14 +17,12 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    fetch(url)
-    .then((response) => response.json())
+    feedReplays('global')
     .then((replays) => {
       this.setState({replays: replays})
     })
     .catch(err => console.error(err))
-    fetch(loginCheckUrl)
-    .then((response) => response.json())
+    loginCheck()
     .then((json) =>{
       this.setState({user: json})
     })
@@ -45,7 +42,7 @@ class App extends React.Component {
         <h1 className="text-6xl">WarCraft III JavaScript Replay Parser</h1> 
         <div>
           {this.state.user === null ? 
-          <a  href={`/api/auth/twitch`} class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+          <a  href={`http://localhost:8080/api/auth/twitch`} className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
               Login
             </a>  : <h1>Logged in as {this.state.user.login}</h1>
             }       

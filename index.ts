@@ -1,12 +1,11 @@
 import dotenv from 'dotenv'
-import app from './app/Server'
+import factory from './app/Server'
 import Database from './app/Database'
 dotenv.config()
 
-console.log(process.env.TWITCH_CLIENT_ID)
 const port = process.env.PORT || 8080
 
-app.listen(port, async () => {
+factory().listen(port, async () => {
   console.log(`App is running on ${port}`)
   try {
     await Database.connect()

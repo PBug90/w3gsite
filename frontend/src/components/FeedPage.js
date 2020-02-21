@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from "react-router";
+import {feedReplays} from '../Requests'
 
-const url =process.env.REACT_APP_API_HOST + "/api/feed/"
 
 class FeedPage extends React.Component {
   constructor(props){
@@ -13,8 +13,7 @@ class FeedPage extends React.Component {
   }
 
   componentDidMount(){
-    fetch(`${url}${this.props.match.params.feedid}`)
-    .then((response) => response.json())
+    feedReplays(this.props.match.feedid)
     .then((replays) => {
       this.setState({replays: replays})
     })
