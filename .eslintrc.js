@@ -6,8 +6,7 @@ module.exports = {
     jest: true
   },
   extends: [
-    'plugin:react/recommended',
-    'standard'
+     'standard'
   ],
   globals: {
     Atomics: 'readonly',
