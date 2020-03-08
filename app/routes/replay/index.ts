@@ -13,10 +13,23 @@ export default function Factory (): Router {
   const parser = new Parser()
   const upload = multer({ dest: 'uploads/', storage: multer.memoryStorage() })
 
-  router.post('/replay/parse', upload.single('replay'), (request: Request, response: Response) => {
+  router.post('/parse', upload.single('replay'), async (request: Request, response: Response) => {
     const fileBuffer = (request as MulterRequest).file.buffer
     const parsedReplay = parser.parse(fileBuffer)
+    const db = await Database.get()
+    await db.collection('parsed').insertOne({ ...parsedReplay, uploadedAt: new Date() })
     response.json(parsedReplay)
+  })
+
+  router.get('/parse', async (request: Request, response: Response) => {
+    try {
+      const db = await Database.get()
+      const result = await db.collection('parsed').find({}, { projection: { __base64Replay: 0 } }).sort({ uploadedAt: -1 }).toArray()
+      return response.json(result)
+    } catch (err) {
+      console.error(err)
+    }
+    return response.status(500).json({ error: true, message: 'Could not retrieve replays.' })
   })
 
   router.post('/replay', upload.single('replay'), async (request: Request, response: Response) => {

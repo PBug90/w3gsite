@@ -1,5 +1,4 @@
 import express, { Request, Response, Express } from 'express'
-import * as path from 'path'
 import routerFactory from './routes'
 import proxy from 'express-http-proxy'
 import cors from 'cors'
