@@ -2,11 +2,10 @@ import express, { Request, Response, Express } from 'express'
 import routerFactory from './routes'
 import proxy from 'express-http-proxy'
 import cors from 'cors'
+import * as path from 'path'
 
 export default function AppFactory () : Express {
   const app = express()
-
-  // app.use(express.static(path.resolve('./') + '/frontend/build'))
 
   if (process.env.NODE_ENV !== 'production') {
     app.use(cors())
@@ -17,9 +16,14 @@ export default function AppFactory () : Express {
     res.status(404).json({ error: 'not found' })
   })
 
-  app.get('*', proxy('http://localhost:3000'))
-  /* app.get('*', (req: Request, res: Response): void => {
-    res.sendFile(path.resolve('./') + '/frontend/build/index.html')
-  }) */
+  if (process.env.NODE_ENV !== 'production') {
+    app.get('*', proxy('http://localhost:3000'))
+  } else {
+    app.use(express.static(path.resolve('./') + '/frontend/build'))
+    app.get('*', (req: Request, res: Response): void => {
+      res.sendFile(path.resolve('./') + '/frontend/build/index.html')
+    })
+  }
+
   return app
 }
