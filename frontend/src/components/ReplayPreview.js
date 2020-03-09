@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Badge from 'react-bootstrap/Badge'
+import TimelineMinimap from './TimelineMinimap';
 
 function ReplayPreview(props){
     const {replay} = props
@@ -11,8 +11,8 @@ function ReplayPreview(props){
              <Card.Body>
                  <Row>
                      <Col>{replay.map.file}</Col>
-                     <Col>{replay.players.map((player) => <h4>{player.race === "R"? `${player.race}${player.raceDetected}`: player.race} {player.name} <small>{player.apm} apm</small></h4>)}</Col>
-                     <Col><Badge variant="secondary">Fast Expansion</Badge></Col>
+                     <Col>{replay.players.map((player) => <h6>{player.race === "R"? `${player.race}${player.raceDetected}`: player.race} <span style={{color: player.color}}> {player.name}</span> <small>{player.apm} apm</small></h6>)}</Col>
+                     <Col><TimelineMinimap width={200} height={200} map={replay.map.file} players={replay.players} actions={replay.actions || []}/></Col>
                 </Row>
             </Card.Body>
         </Card>

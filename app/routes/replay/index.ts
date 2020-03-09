@@ -15,9 +15,14 @@ export default function Factory (): Router {
 
   router.post('/parse', upload.single('replay'), async (request: Request, response: Response) => {
     const fileBuffer = (request as MulterRequest).file.buffer
+    const actions : any[] = []
+    parser.on('actionblock', (block: any, playerId: number) => {
+      actions.push({ ...block, time: parser.msElapsed, playerId })
+    })
     const parsedReplay = parser.parse(fileBuffer)
+
     const db = await Database.get()
-    await db.collection('parsed').insertOne({ ...parsedReplay, uploadedAt: new Date() })
+    await db.collection('parsed').insertOne({ ...parsedReplay, actions, uploadedAt: new Date() })
     response.json(parsedReplay)
   })
 
