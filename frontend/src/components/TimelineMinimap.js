@@ -113,7 +113,7 @@ export default class TimelineMinimap extends React.Component {
           position: 'relative'
         }}
       >
-        <img style={{width, height}} src={mapImageSRC} alt="minimap image"/>
+        <img style={{width, height}} src={mapImageSRC} alt="minimap"/>
         <canvas
           ref={(el) => (this.canvas = el)}
           style={{left: 0, top: 0, position: 'absolute'}}
