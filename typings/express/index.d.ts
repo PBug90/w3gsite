@@ -1,10 +1,15 @@
-declare namespace Express {
-    export interface Request {
+import { ObjectId } from 'mongodb'
 
-    }
-    export interface User{
+declare global {
+    namespace Express {
+      export interface User {
         displayName: string;
         login: string;
         provider: string;
+        _id: ObjectId
     }
+    export interface Request {
+      user?: User | undefined
+    }
+  }
 }

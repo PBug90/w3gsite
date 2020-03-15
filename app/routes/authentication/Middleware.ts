@@ -1,8 +1,11 @@
 import { RequestHandler } from 'express'
 
-export const bla : RequestHandler = (request, response, next) => {
+const AuthenticationMiddleware : RequestHandler = (request, response, next) => {
   if (request.user) {
     next()
+  } else {
+    response.status(401).json({ error: true, message: 'You are not authorized.' })
   }
-  response.status(401).json({ error: true, message: 'You are not authorized.' })
 }
+
+export default AuthenticationMiddleware
