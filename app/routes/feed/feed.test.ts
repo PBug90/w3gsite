@@ -55,11 +55,29 @@ test('can create a private feed', async () => {
 })
 
 test('private feed can not be viewed by anonymous user', async () => {
-  await db.collection('feeds').insertOne({ name: 'privatefeed2', owner: testUser._id, visibility: 'private' })
+  await db.collection('feeds').insertOne({ name: 'privatefeed2', _owner: testUser._id, visibility: 'private' })
   const result = await request(app)
     .get('/feed/privatefeed2')
     .send({ feed: 'mytestfeed', owner: 'somebodyelse' })
   expect(result.status).toEqual(401)
+})
+
+test('logged in user can retrieve own feeds and private feeds shared with him', async () => {
+  const otherUserId = new ObjectId('bbbbbbbbbbbbbbbbbbbbbbbb')
+  await db.collection('feeds').insertOne({ name: 'privatefeed2', _owner: testUser._id, visibility: 'private' })
+  await db.collection('feeds').insertOne({ name: 'privateofOtherUser', _owner: otherUserId, _sharedWith: [testUser._id], visibility: 'private' })
+  const result = await request(app)
+    .get('/myfeeds')
+    .send()
+  expect(result.status).toEqual(200)
+  expect(result.body).toEqual([
+    { name: 'privatefeed2', _owner: String(testUser._id), visibility: 'private', _id: expect.any(String) },
+    { name: 'privateofOtherUser', _owner: String(otherUserId), visibility: 'private', _id: expect.any(String), _sharedWith: [String(testUser._id)] }
+  ])
+})
+
+afterEach(async () => {
+  await db.dropCollection('feeds')
 })
 
 afterAll(() => {

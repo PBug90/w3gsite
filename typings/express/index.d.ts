@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb'
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { ObjectId } from '@types/mongodb'
 declare global {
     namespace Express {
       export interface User {

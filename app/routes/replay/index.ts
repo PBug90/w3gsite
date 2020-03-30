@@ -1,19 +1,17 @@
 import express, { Request, Response, Router } from 'express'
 // @ts-ignore
 import Parser from 'w3gjs'
-import multer from 'multer'
 import Database from '../../Database'
 import { ObjectId } from 'mongodb'
+import { parseAndInsertFromBuffer } from '../../database/Replay'
+import { MulterRequest } from '../types'
+import { replayUpload as ReplayUploadMiddleware } from '../Middlewares'
 
-interface MulterRequest extends Request {
-  file: any;
-}
 export default function Factory (): Router {
   const router = express.Router()
   const parser = new Parser()
-  const upload = multer({ dest: 'uploads/', storage: multer.memoryStorage() })
 
-  router.post('/parse', upload.single('replay'), async (request: Request, response: Response) => {
+  router.post('/parse', ReplayUploadMiddleware, async (request: Request, response: Response) => {
     const fileBuffer = (request as MulterRequest).file.buffer
     const actions : any[] = []
     parser.on('actionblock', (block: any, playerId: number) => {
@@ -37,12 +35,10 @@ export default function Factory (): Router {
     return response.status(500).json({ error: true, message: 'Could not retrieve replays.' })
   })
 
-  router.post('/replay', upload.single('replay'), async (request: Request, response: Response) => {
+  router.post('/replay', ReplayUploadMiddleware, async (request: Request, response: Response) => {
     const fileBuffer = (request as MulterRequest).file.buffer
+    const result = await parseAndInsertFromBuffer(fileBuffer, true)
     try {
-      const parsedReplay = parser.parse(fileBuffer)
-      const db = await Database.get()
-      const result = await db.collection('replays').insertOne({ ...parsedReplay, uploadedAt: new Date(), __base64Replay: request.file.buffer.toString('base64') })
       if (result.ops.length === 1) {
         delete result.ops[0].__base64Replay
         response.json(result.ops[0])

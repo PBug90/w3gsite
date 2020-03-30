@@ -9,7 +9,9 @@ import {loginCheck} from './Requests'
 import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Button from 'react-bootstrap/Button'
-
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import UserSidebar from './components/UserSidebar'
 class App extends React.Component {
   constructor(props){
     super(props);
@@ -44,7 +46,10 @@ class App extends React.Component {
         </Navbar.Text>
         }               
       </Navbar>
-      <Container className="mt-3">
+      <Container className="mt-3" fluid>
+        <Row>
+      <Col xs={3}><UserSidebar/></Col>
+        <Col xs={6}>
           <Switch>
           <Route path="/feed/:feedid">
             <FeedPage/>
@@ -53,6 +58,8 @@ class App extends React.Component {
             <HomePage/>
           </Route>
         </Switch>
+        </Col>
+        </Row>
         </Container>
         </AuthContext.Provider>
         </Router>

@@ -13,6 +13,10 @@ export const feedReplays = (feedid)=> {
     return fetch(`${hostname}/api/feed/${feedid}`).then(checkStatusCode).then(toJSON)
 }
 
+export const getUserFeeds = ()=> {
+    return fetch(`${hostname}/api/myfeeds`).then(checkStatusCode).then(toJSON)
+}
+
 export const parsedReplays = ()=> {
     return fetch(`${hostname}/api/parse/`).then(checkStatusCode).then(toJSON)
 }
@@ -23,6 +27,10 @@ export const loginCheck = () => {
 
 export const replayUpload = (formdata) => {
     return fetch(`${hostname}/api/parse`,{ method: 'POST',body: formdata}).then(checkStatusCode).then(toJSON)
+}
+
+export const createFeed = (data) => {
+    return fetch(`${hostname}/api/feed`,{ method: 'POST',body: JSON.stringify(data),headers:{'Content-Type': 'application/json'}}).then(checkStatusCode).then(toJSON)
 }
 
 export const replayParseUpload = (formdata) => {
