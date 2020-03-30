@@ -48,7 +48,7 @@ class App extends React.Component {
       </Navbar>
       <Container className="mt-3" fluid>
         <Row>
-      <Col xs={3}><UserSidebar/></Col>
+      <Col xs={3}>{this.state.user && <UserSidebar/>}</Col>
         <Col xs={6}>
           <Switch>
           <Route path="/feed/:feedid">

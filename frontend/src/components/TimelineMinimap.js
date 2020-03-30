@@ -19,7 +19,7 @@ export default class TimelineMinimap extends React.Component {
     super(props);
     this.state = {
       backgroundImage: null,
-      validMap: !!mapInformation.hasOwnProperty(props.map),
+      validMap: mapInformation.hasOwnProperty(props.map),
       startTime: 0,
       endTime: 20,
       playerIdToColor: this.props.players.reduce((prev, current, index) =>{
@@ -49,12 +49,26 @@ export default class TimelineMinimap extends React.Component {
     this.updateHeatmap();
   }
 
-  componentDidUpdate() {
-    this.updateHeatmap();
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.players !== this.props.players){
+      this.setState({
+        backgroundImage: null,
+        validMap: mapInformation.hasOwnProperty(this.props.map),
+        startTime: 0,
+        endTime: 20,
+        playerIdToColor: this.props.players.reduce((prev, current, index) =>{
+          prev[current.id] = current.color
+          return prev
+      } , {})},() => {
+        this.updateHeatmap();
+      }) 
+    } else if (prevState.startTime !== this.state.startTime || prevState.endTime !== this.state.endTime){
+      this.updateHeatmap()
+    }
   }
 
-  updateHeatmap() {
-    if (this.canvas) {
+  updateHeatmap() {    
+    if (this.canvas && this.state.validMap) {
       const actions = this.props.actions.filter(
         (action) =>
           (action.hasOwnProperty('targetX') || action.hasOwnProperty('targetAX')) &&
