@@ -18,7 +18,7 @@ export default function Factory (): Router {
       actions.push({ ...block, time: parser.msElapsed, playerId })
     })
     const parsedReplay = parser.parse(fileBuffer)
-    parser.removeListener('actionblock')
+    parser.removeAllListeners('actionblock')
     const db = await Database.get()
     await db.collection('parsed').insertOne({ ...parsedReplay, actions, uploadedAt: new Date() })
     response.json(parsedReplay)

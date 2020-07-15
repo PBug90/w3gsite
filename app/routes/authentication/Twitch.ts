@@ -58,7 +58,7 @@ export default function Factory (): Router {
         Accept: 'routerlication/vnd.twitchtv.v5+json',
         Authorization: 'Bearer ' + accessToken
       }
-    }).then((response) => response.json()).then((json) => done(null, json))
+    }).then((response) => response.json()).then((json) => done(null, json)).catch(err => done(err))
   }
 
   // Set route to start OAuth link, this is where you define scopes to request
