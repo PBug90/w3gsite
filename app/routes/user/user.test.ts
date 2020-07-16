@@ -36,8 +36,8 @@ describe('/user/<username>/feed', () => {
       .send()
     expect(result.status).toEqual(200)
     expect(result.body).toEqual([
-      { name: 'testfeed' },
-      { name: 'testfeed2' }
+      { name: 'testfeed', visibility: 'PUBLIC' },
+      { name: 'testfeed2', visibility: 'PUBLIC' }
     ])
   })
 
