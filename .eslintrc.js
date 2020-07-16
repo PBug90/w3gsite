@@ -6,7 +6,7 @@ module.exports = {
     jest: true
   },
   extends: [
-     'standard'
+    'standard'
   ],
   globals: {
     Atomics: 'readonly',
@@ -24,8 +24,8 @@ module.exports = {
     '@typescript-eslint'
   ],
   rules: {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error"
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': 'error'
   },
-  ignorePatterns:["frontend"]
+  ignorePatterns: ['frontend']
 }
