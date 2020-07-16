@@ -14,7 +14,7 @@ enum VisibilityType {
 }
 
 interface Feed {
-  visibility: VisibilityType;
+  visibility: string;
   name: string;
 }
 
@@ -27,7 +27,7 @@ export default function RouteFactory () : Router {
       const db = await Database.get()
       const result = await db.collection('users').find({ username: request.params.username }, { projection: { feeds: 1 } }).toArray()
       if (result.length > 0) {
-        return response.json(result[0].feeds.filter((feed: Feed) => feed.visibility === VisibilityType.PUBLIC))
+        return response.json(result[0].feeds.filter((feed: Feed) => feed.visibility === 'PUBLIC'))
       }
       return response.status(404).json({ error: true, message: 'Feed not found.' })
     } catch (err) {
