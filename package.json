@@ -87,7 +87,7 @@
     "core-js": "^3.2.1",
     "cross-env": "5.2.0",
     "dotenv": "^8.1.0",
-    "express": "4.17.1",
+    "express": "4.17.3",
     "express-jwt": "^5.3.1",
     "fast-safe-stringify": "2.0.6",
     "jest": "^24.9.0",
